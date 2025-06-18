@@ -8,6 +8,12 @@ namespace pruebas
 {
     internal class Program
     {
+        // He desarrollado este programa en base a un modelo de estructura de datos que funciona por medio
+        // de "arreglos de arreglos". Decidi dessarrollarlo de esta manera ya que la trabaje anteriormente en
+        // un proyecto de python, con este tipo de estructura pienso que es mas facil acceder a los datos y
+        // manupularlos, tambien en mi opinion es mas facil de leer y entender su funcionamiento. Aunuque 
+        // desconozco si es viable en terminos de optimizacion.
+
         static string[][] Español = new string[5][];
         static string[][] Matematicas = new string[5][];
         static string[][] Ciencias = new string[5][];
@@ -25,7 +31,7 @@ namespace pruebas
         {
             for (int dia = 0; dia < Matematicas.Length; dia++)
             {
-                Español[dia] = new string[3];
+                Matematicas[dia] = new string[3];
             }
         }
         static void IniciarCiencias()
@@ -60,7 +66,7 @@ namespace pruebas
                     break;
                 case "2":
                     Console.WriteLine("Eliminar Estudiante");
-                    
+                    EliminarEstudiante();
                     break;
                 case "3":
                     Console.WriteLine("Consultar Estudiante");
@@ -71,6 +77,7 @@ namespace pruebas
                     Menu();
                     break;
             }
+            Console.WriteLine("\n");
         }
 
         static void RegistrarEstudiante()
@@ -85,41 +92,122 @@ namespace pruebas
                 case 1:
                     Console.WriteLine("Ingrese el nombre del estudiante de Español: ");
                     string nombreEspañol = Console.ReadLine();
-                    int indiceEsp = 0;
-                    Español[varDia][indiceEsp] = nombreEspañol;
-                    indiceEsp++;
-                    Console.WriteLine($"Estudiante {nombreEspañol} registrado en Español para el día {varDia + 1}.");
+                    
+                    for (int i = 0; i < Español[varDia].Length; i++)
+                    {
+                        if (Español[varDia][i] == null)
+                        {
+                            Español[varDia][i] = nombreEspañol;
+                            Console.WriteLine($"Estudiante {nombreEspañol} registrado en Español para el día {varDia + 1}.\n");
+                            return;
+                        }
+                    }
+                    Console.WriteLine("No hay espacio disponible para más estudiantes en este día y materia.\n");
                     break;
-
                 case 2:
                     Console.WriteLine("Ingrese el nombre del estudiante de Matemáticas: ");
                     string nombreMatematicas = Console.ReadLine();
-                    int indiceMat = 0;
-                    Matematicas[varDia][indiceMat] = nombreMatematicas;
-                    indiceMat++;
-                    Console.WriteLine($"Estudiante {nombreMatematicas} registrado en Matemáticas para el día {varDia + 1}.");
+                    for (int i = 0; i < Matematicas[varDia].Length; i++)
+                    {
+                        if (Matematicas[varDia][i] == null)
+                        {
+                            Matematicas[varDia][i] = nombreMatematicas;
+                            Console.WriteLine($"Estudiante {nombreMatematicas} registrado en Matemáticas para el día {varDia + 1}.\n");
+                            return;
+                        }
+                    }
+                    Console.WriteLine("No hay espacio disponible para más estudiantes en este día y materia.\n");
                     break;
-
                 case 3:
                     Console.WriteLine("Ingrese el nombre del estudiante de Ciencias: ");
                     string nombreCiencias = Console.ReadLine();
-                    int indiceCien = 0;
-                    Ciencias[varDia][indiceCien] = nombreCiencias;
-                    indiceCien++;
-                    Console.WriteLine($"Estudiante {nombreCiencias} registrado en Ciencias para el día {varDia + 1}.");
+                    for (int i = 0; i < Ciencias[varDia].Length; i++)
+                    {
+                        if (Ciencias[varDia][i] == null)
+                        {
+                            Ciencias[varDia][i] = nombreCiencias;
+                            Console.WriteLine($"Estudiante {nombreCiencias} registrado en Ciencias para el día {varDia + 1}.\n");
+                            return;
+                        }
+                    }
+                    Console.WriteLine("No hay espacio disponible para más estudiantes en este día y materia.\n");
                     break;
-
                 case 4:
                     Console.WriteLine("Ingrese el nombre del estudiante de Sociales: ");
                     string nombreSociales = Console.ReadLine();
-                    int indiceSoc = 0;
-                    Sociales[varDia][indiceSoc] = nombreSociales;
-                    indiceSoc++;
-                    Console.WriteLine($"Estudiante {nombreSociales} registrado en Sociales para el día {varDia + 1}.");
+                    for (int i = 0; i < Sociales[varDia].Length; i++)
+                    {
+                        if (Sociales[varDia][i] == null)
+                        {
+                            Sociales[varDia][i] = nombreSociales;
+                            Console.WriteLine($"Estudiante {nombreSociales} registrado en Sociales para el día {varDia + 1}.\n");
+                            return;
+                        }
+                    }
+                    Console.WriteLine("No hay espacio disponible para más estudiantes en este día y materia.\n");
                     break;
-
             }
 
+        }
+
+        static void EliminarEstudiante()
+        {
+            Console.WriteLine("Ingrese el dia de la semana (1-5) correspondientemente: ");
+            int varDia = int.Parse(Console.ReadLine()) - 1;
+            Console.WriteLine("Ingrese la materia: 1. Español, 2. Matemáticas, 3. Ciencias, 4. Sociales: ");
+            int varMateria = int.Parse(Console.ReadLine());
+            Console.WriteLine("Ingrese el nombre del estudiante a eliminar: ");
+            string nombreEstudiante = Console.ReadLine();
+            switch (varMateria)
+            {
+                case 1:
+                    for (int i = 0; i < Español[varDia].Length; i++)
+                    {
+                        if (Español[varDia][i] == nombreEstudiante)
+                        {
+                            Español[varDia][i] = null;
+                            Console.WriteLine($"Estudiante {nombreEstudiante} eliminado de Español para el día {varDia + 1}.\n");
+                            return;
+                        }
+                    }
+                    break;
+                case 2:
+                    for (int i = 0; i < Matematicas[varDia].Length; i++)
+                    {
+                        if (Matematicas[varDia][i] == nombreEstudiante)
+                        {
+                            Matematicas[varDia][i] = null;
+                            Console.WriteLine($"Estudiante {nombreEstudiante} eliminado de Matemáticas para el día {varDia + 1}.\n");
+                            return;
+                        }
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i < Ciencias[varDia].Length; i++)
+                    {
+                        if (Ciencias[varDia][i] == nombreEstudiante)
+                        {
+                            Ciencias[varDia][i] = null;
+                            Console.WriteLine($"Estudiante {nombreEstudiante} eliminado de Ciencias para el día {varDia + 1}.\n");
+                            return;
+                        }
+                    }
+                    break;
+                case 4:
+                    for (int i = 0; i < Sociales[varDia].Length; i++)
+                    {
+                        if (Sociales[varDia][i] == nombreEstudiante)
+                        {
+                            Sociales[varDia][i] = null;
+                            Console.WriteLine($"Estudiante {nombreEstudiante} eliminado de Sociales para el día {varDia + 1}.\n");
+                            return;
+                        }
+                    }
+                    break;
+
+
+            }
+            Console.WriteLine($"{nombreEstudiante} no se ha encontrado en la materia seleccionada del día {varDia + 1}.\n");
         }
 
         static void Consultar()
@@ -183,8 +271,9 @@ namespace pruebas
             while (true)
             {
                 Menu();
-                Console.WriteLine("\n¿Desea realizar otra operación? (s/n): ");
+                Console.WriteLine("¿Desea realizar otra operación? (s/n): ");
                 string respuesta = Console.ReadLine().ToLower();
+                Console.WriteLine("\n");
                 if (respuesta != "s")
                 {
                     Console.WriteLine("Ha salido del menu");
